@@ -4,8 +4,7 @@
     "name": "Rolex Submariner",
     "category": "Watches",
     "price": 12000,
-    "image": "/images/rolex.jpg",
-    "videoUrl": "https://youtube.com/shorts/j54XeEtxB7I?si=6CIs6QDvsR4lnBQQ"
+    "image": "/images/rolex.jpg"
   },
   {
     "id": 2,
