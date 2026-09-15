@@ -17,16 +17,9 @@ function ProductMedia({ image, videoUrl, name }) {
   }
 
   const onVideoSlide = hasVideo && slide === 'video'
-  const wrapperClass = [
-    'product-detail-image-wrapper',
-    onVideoSlide && video.isShort ? 'is-video-vertical' : '',
-    onVideoSlide && !video.isShort ? 'is-video-wide' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
 
   return (
-    <div className={wrapperClass}>
+    <div className="product-detail-image-wrapper">
       {onVideoSlide ? (
         playing ? (
           <iframe
