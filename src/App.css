@@ -946,6 +946,17 @@
   transition: background 0.25s ease;
 }
 
+.inquiry-form button:disabled {
+  background: var(--color-gold-dark);
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #e08a8a;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
 .inquiry-form button:hover {
   background: var(--color-gold-light);
 }
@@ -1008,6 +1019,88 @@
   font-size: 0.7rem;
   letter-spacing: 1px;
   color: var(--color-text-faint);
+}
+
+/* ============ CART TOAST ============ */
+
+.cart-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 360px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-gold-dark);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 14px;
+  animation: toast-in 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cart-toast-image {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.cart-toast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-toast-message {
+  color: var(--color-text);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.cart-toast-message strong {
+  color: #f5f2ea;
+}
+
+.cart-toast-link {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  text-decoration: none;
+}
+
+.cart-toast-link:hover {
+  text-decoration: underline;
+}
+
+.cart-toast-close {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--color-text-faint);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.25s ease;
+}
+
+.cart-toast-close:hover {
+  color: var(--color-gold-light);
 }
 
 /* ============ RESPONSIVE ============ */
@@ -1128,5 +1221,12 @@
   .hero {
     height: 50vh;
     min-height: 380px;
+  }
+
+  .cart-toast {
+    left: 16px;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    max-width: none;
   }
 }

@@ -12,6 +12,7 @@ function readStoredCart() {
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState(readStoredCart)
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(items))
@@ -27,6 +28,11 @@ export function CartProvider({ children }) {
       }
       return [...current, { ...product, quantity }]
     })
+    setToast({ id: product.id, name: product.name, image: product.image, key: Date.now() })
+  }
+
+  function dismissToast() {
+    setToast(null)
   }
 
   function removeFromCart(id) {
@@ -59,6 +65,8 @@ export function CartProvider({ children }) {
     clearCart,
     cartCount,
     cartTotal,
+    toast,
+    dismissToast,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

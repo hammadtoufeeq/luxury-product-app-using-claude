@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import CartToast from './components/CartToast'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import ProductPage from './pages/ProductPage'
@@ -26,6 +27,7 @@ function App() {
       </Routes>
 
       <Footer />
+      <CartToast />
     </div>
   )
 }
