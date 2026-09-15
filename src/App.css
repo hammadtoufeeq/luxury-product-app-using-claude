@@ -4,6 +4,13 @@
   flex-direction: column;
 }
 
+/* Flex items default to min-width:auto, so a grid child's intrinsic
+   column width (auto-fill + minmax) can force this wider than the
+   viewport. Let every direct child shrink instead. */
+.app > * {
+  min-width: 0;
+}
+
 /* ============ NAVBAR ============ */
 
 .navbar {
@@ -118,7 +125,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center 45%;
-  filter: brightness(0.6) saturate(0.9);
+  filter: brightness(0.88) saturate(0.95);
   display: block;
   transform: scale(1.02);
 }
@@ -127,16 +134,16 @@
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   text-align: center;
-  padding: 0 24px;
+  padding: 0 24px calc(56px + env(safe-area-inset-bottom, 0px));
   background: linear-gradient(
     180deg,
-    rgba(12, 11, 9, 0.35) 0%,
-    rgba(12, 11, 9, 0.25) 35%,
-    rgba(12, 11, 9, 0.75) 85%,
-    rgba(12, 11, 9, 0.96) 100%
+    rgba(12, 11, 9, 0) 0%,
+    rgba(12, 11, 9, 0) 42%,
+    rgba(12, 11, 9, 0.58) 68%,
+    rgba(12, 11, 9, 0.94) 100%
   );
 }
 
@@ -168,7 +175,7 @@
 
 .hero-title {
   font-family: var(--font-heading);
-  font-size: 3.6rem;
+  font-size: clamp(1.9rem, 1.1rem + 4vw, 3.6rem);
   line-height: 1.15;
   font-weight: 600;
   color: #f5f2ea;
@@ -179,7 +186,7 @@
 .hero-subtitle {
   margin: 26px auto 0;
   max-width: 480px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.85rem + 0.6vw, 1.2rem);
   line-height: 1.6;
   color: var(--color-text-dim);
 }
@@ -304,6 +311,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 36px;
+  width: 100%;
   max-width: 1240px;
   margin: 0 auto;
   padding: 48px 32px 100px;
@@ -320,10 +328,17 @@
   background: linear-gradient(180deg, var(--color-surface-raised) 0%, var(--color-bg-alt) 100%);
   border: 1px solid var(--color-border);
   overflow: hidden;
+  cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.product-card:hover {
+.product-card:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.product-card:hover,
+.product-card:focus-visible {
   transform: translateY(-6px);
   border-color: var(--color-gold);
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
@@ -354,6 +369,8 @@
   left: 16px;
   right: 16px;
   bottom: 16px;
+  display: block;
+  text-align: center;
   background: rgba(12, 11, 9, 0.82);
   backdrop-filter: blur(6px);
   border: 1px solid var(--color-gold);
@@ -363,20 +380,25 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   padding: 12px 0;
-  cursor: pointer;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease, background 0.25s ease, color 0.25s ease;
 }
 
-.product-card:hover .quick-view-btn {
+.product-card:hover .quick-view-btn,
+.product-card:focus-visible .quick-view-btn {
   opacity: 1;
   transform: translateY(0);
-}
-
-.quick-view-btn:hover {
   background: var(--color-gold);
   color: #100e0a;
+}
+
+/* Touch devices have no hover state, so keep the affordance visible */
+@media (hover: none) {
+  .quick-view-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .product-info {
@@ -605,12 +627,22 @@
     justify-content: center;
   }
 
-  .hero-title {
-    font-size: 2.3rem;
+  .hero {
+    height: 70vh;
+    min-height: 460px;
   }
 
-  .hero-subtitle {
-    font-size: 1.05rem;
+  .hero-overlay {
+    padding: 0 20px calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .hero-cta {
+    margin-top: 28px;
+    padding: 14px 30px;
   }
 
   .filters {
@@ -629,12 +661,8 @@
 
 @media (max-width: 420px) {
   .hero {
-    height: 76vh;
-    min-height: 440px;
-  }
-
-  .hero-title {
-    font-size: 1.9rem;
+    height: 64vh;
+    min-height: 400px;
   }
 
   .category-pills {

@@ -1,11 +1,22 @@
 function ProductCard({ image, name, category, price, onView }) {
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onView()
+    }
+  }
+
   return (
-    <article className="product-card">
+    <article
+      className="product-card"
+      onClick={onView}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+    >
       <div className="image-wrapper">
         <img className="product-image" src={image} alt={name} loading="lazy" />
-        <button className="quick-view-btn" onClick={onView}>
-          View Details
-        </button>
+        <span className="quick-view-btn">View Details</span>
       </div>
       <div className="product-info">
         <span className="product-category">{category}</span>
