@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import products from '../data/products.json'
 import Filters from '../components/Filters'
 import ProductGrid from '../components/ProductGrid'
 
 function Products() {
+  const [searchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState(() => localStorage.getItem('searchTerm') || '')
   const [categoryFilter, setCategoryFilter] = useState(
-    () => localStorage.getItem('categoryupdate') || '',
+    () => searchParams.get('category') || localStorage.getItem('categoryupdate') || '',
   )
   const [priceRange, setPriceRange] = useState('')
 
