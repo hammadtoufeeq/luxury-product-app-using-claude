@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import InquiryForm from './InquiryForm'
+import ProductVideo from './ProductVideo'
 import { useCart } from '../context/useCart'
 
 function ProductDetail({ product, onBack }) {
@@ -41,6 +42,8 @@ function ProductDetail({ product, onBack }) {
             <InquiryForm productName={product.name} />
           </div>
         </div>
+
+        <ProductVideo videoUrl={product.videoUrl} productName={product.name} />
       </div>
     </section>
   )
