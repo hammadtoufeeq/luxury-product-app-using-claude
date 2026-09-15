@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard'
 
-function ProductGrid({ products, onSelect }) {
+function ProductGrid({ products }) {
   if (products.length === 0) {
     return (
       <div className="empty-state">
@@ -14,11 +14,11 @@ function ProductGrid({ products, onSelect }) {
       {products.map((product) => (
         <ProductCard
           key={product.id}
+          id={product.id}
           image={product.image}
           name={product.name}
           category={product.category}
           price={product.price}
-          onView={() => onSelect(product)}
         />
       ))}
     </div>

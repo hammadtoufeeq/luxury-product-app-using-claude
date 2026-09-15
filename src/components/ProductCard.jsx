@@ -1,19 +1,8 @@
-function ProductCard({ image, name, category, price, onView }) {
-  function handleKeyDown(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      onView()
-    }
-  }
+import { Link } from 'react-router-dom'
 
+function ProductCard({ id, image, name, category, price }) {
   return (
-    <article
-      className="product-card"
-      onClick={onView}
-      onKeyDown={handleKeyDown}
-      role="button"
-      tabIndex={0}
-    >
+    <Link to={`/product/${id}`} className="product-card">
       <div className="image-wrapper">
         <img className="product-image" src={image} alt={name} loading="lazy" />
         <span className="quick-view-btn">View Details</span>
@@ -23,7 +12,7 @@ function ProductCard({ image, name, category, price, onView }) {
         <h3 className="product-name">{name}</h3>
         <p className="product-price">${price.toLocaleString()}</p>
       </div>
-    </article>
+    </Link>
   )
 }
 
