@@ -848,6 +848,58 @@
   align-items: start;
 }
 
+.product-detail-layout.theater-mode {
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+.product-media-theater {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid var(--color-gold-dark);
+  background: #000;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.product-media-theater.is-vertical {
+  max-width: 420px;
+  aspect-ratio: 9 / 16;
+}
+
+.product-media-theater.is-wide {
+  max-width: 760px;
+  aspect-ratio: 16 / 9;
+}
+
+.media-theater-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(12, 11, 9, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--color-gold-dark);
+  color: var(--color-gold-light);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.media-theater-close:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #100e0a;
+}
+
 .product-detail-image-wrapper {
   border: 1px solid var(--color-border);
   overflow: hidden;

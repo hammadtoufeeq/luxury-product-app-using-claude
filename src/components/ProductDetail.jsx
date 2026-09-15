@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import InquiryForm from './InquiryForm'
 import ProductMedia from './ProductMedia'
 import { useCart } from '../context/useCart'
@@ -6,6 +7,7 @@ import { useCart } from '../context/useCart'
 function ProductDetail({ product, onBack }) {
   const { addToCart } = useCart()
   const [added, setAdded] = useState(false)
+  const [theaterMode, setTheaterMode] = useState(false)
 
   function handleAddToCart() {
     addToCart(product)
@@ -20,10 +22,17 @@ function ProductDetail({ product, onBack }) {
           &larr; Back to Collection
         </button>
 
-        <div className="product-detail-layout">
-          <ProductMedia image={product.image} videoUrl={product.videoUrl} name={product.name} />
+        <motion.div layout className={`product-detail-layout ${theaterMode ? 'theater-mode' : ''}`}>
+          <ProductMedia
+            image={product.image}
+            videoUrl={product.videoUrl}
+            name={product.name}
+            theaterMode={theaterMode}
+            onEnterTheater={() => setTheaterMode(true)}
+            onExitTheater={() => setTheaterMode(false)}
+          />
 
-          <div className="product-detail-info">
+          <motion.div layout className="product-detail-info">
             <span className="product-category">{product.category}</span>
             <h2>{product.name}</h2>
             <p className="product-detail-price">${product.price.toLocaleString()}</p>
@@ -38,8 +47,8 @@ function ProductDetail({ product, onBack }) {
             </p>
 
             <InquiryForm productName={product.name} />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
