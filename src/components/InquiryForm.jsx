@@ -1,27 +1,18 @@
 import { useState } from 'react'
-import { sendEmail } from '../lib/sendEmail'
 
 function InquiryForm({ productName }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
-  const [error, setError] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
-    setStatus('sending')
-    setError('')
-    try {
-      await sendEmail({ type: 'product-question', product: productName, name, email, message })
-      setStatus('sent')
-    } catch (err) {
-      setError(err.message)
-      setStatus('error')
-    }
+    console.log('Product question:', { product: productName, name, email, message })
+    setSubmitted(true)
   }
 
-  if (status === 'sent') {
+  if (submitted) {
     return (
       <p className="thank-you">
         Thank you, {name}! We&rsquo;ve received your question about {productName} and will be in
@@ -57,10 +48,7 @@ function InquiryForm({ productName }) {
         rows={4}
         required
       />
-      {status === 'error' && <p className="form-error">{error}</p>}
-      <button type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending...' : 'Send Message'}
-      </button>
+      <button type="submit">Send Message</button>
     </form>
   )
 }

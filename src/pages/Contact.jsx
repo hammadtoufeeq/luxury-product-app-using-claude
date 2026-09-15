@@ -1,24 +1,15 @@
 import { useState } from 'react'
-import { sendEmail } from '../lib/sendEmail'
 
 function Contact() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
-  const [error, setError] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
-    setStatus('sending')
-    setError('')
-    try {
-      await sendEmail({ type: 'contact', name, email, message })
-      setStatus('sent')
-    } catch (err) {
-      setError(err.message)
-      setStatus('error')
-    }
+    console.log('Contact message:', { name, email, message })
+    setSubmitted(true)
   }
 
   return (
@@ -46,7 +37,7 @@ function Contact() {
         </div>
 
         <div className="contact-form-wrap">
-          {status === 'sent' ? (
+          {submitted ? (
             <p className="thank-you">
               Thank you, {name || 'friend'}. Your message has been received — our team will
               respond within one business day.
@@ -74,10 +65,7 @@ function Contact() {
                 rows={5}
                 required
               />
-              {status === 'error' && <p className="form-error">{error}</p>}
-              <button type="submit" disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending...' : 'Send Message'}
-              </button>
+              <button type="submit">Send Message</button>
             </form>
           )}
         </div>

@@ -1,30 +1,21 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/useCart'
-import { sendEmail } from '../lib/sendEmail'
 
 function Cart() {
   const { items, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
-  const [error, setError] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
-    setStatus('sending')
-    setError('')
-    try {
-      await sendEmail({ type: 'purchase-request', name, email, items, total: cartTotal })
-      setStatus('sent')
-      clearCart()
-    } catch (err) {
-      setError(err.message)
-      setStatus('error')
-    }
+    console.log('Purchase request:', { name, email, items, total: cartTotal })
+    setSubmitted(true)
+    clearCart()
   }
 
-  if (status === 'sent') {
+  if (submitted) {
     return (
       <section className="static-page cart-page">
         <div className="section-heading">
@@ -143,10 +134,7 @@ function Cart() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            {status === 'error' && <p className="form-error">{error}</p>}
-            <button type="submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending...' : 'Submit Purchase Request'}
-            </button>
+            <button type="submit">Submit Purchase Request</button>
           </form>
         </div>
       </div>

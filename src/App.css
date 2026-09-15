@@ -946,17 +946,6 @@
   transition: background 0.25s ease;
 }
 
-.inquiry-form button:disabled {
-  background: var(--color-gold-dark);
-  cursor: not-allowed;
-}
-
-.form-error {
-  color: #e08a8a;
-  font-size: 0.88rem;
-  line-height: 1.5;
-}
-
 .inquiry-form button:hover {
   background: var(--color-gold-light);
 }
