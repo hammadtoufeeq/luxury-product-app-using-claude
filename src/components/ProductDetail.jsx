@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import InquiryForm from './InquiryForm'
-import ProductVideo from './ProductVideo'
+import ProductMedia from './ProductMedia'
 import { useCart } from '../context/useCart'
 
 function ProductDetail({ product, onBack }) {
@@ -21,9 +21,7 @@ function ProductDetail({ product, onBack }) {
         </button>
 
         <div className="product-detail-layout">
-          <div className="product-detail-image-wrapper">
-            <img src={product.image} alt={product.name} />
-          </div>
+          <ProductMedia image={product.image} videoUrl={product.videoUrl} name={product.name} />
 
           <div className="product-detail-info">
             <span className="product-category">{product.category}</span>
@@ -42,8 +40,6 @@ function ProductDetail({ product, onBack }) {
             <InquiryForm productName={product.name} />
           </div>
         </div>
-
-        <ProductVideo videoUrl={product.videoUrl} productName={product.name} />
       </div>
     </section>
   )
