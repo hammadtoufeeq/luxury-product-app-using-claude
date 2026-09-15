@@ -115,30 +115,20 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 62vh;
-  min-height: 360px;
-  max-height: 640px;
+  height: 78vh;
+  min-height: 460px;
+  max-height: 780px;
   overflow: hidden;
+  background: var(--color-bg);
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 32%;
-  filter: brightness(0.92) saturate(0.95);
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(0.94) saturate(0.95);
   display: block;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 120px;
-  background: linear-gradient(180deg, rgba(12, 11, 9, 0) 0%, var(--color-bg) 100%);
-  pointer-events: none;
 }
 
 .hero-caption {
@@ -213,13 +203,9 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 72px 32px 0;
-}
-
-.filters-row {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
 }
 
 .search-field {
@@ -258,37 +244,6 @@
 .search-box:focus {
   border-color: var(--color-gold);
   box-shadow: 0 0 0 1px rgba(198, 161, 91, 0.3);
-}
-
-.category-pills {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.pill {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-dim);
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 9px 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.pill:hover {
-  border-color: var(--color-gold);
-  color: var(--color-gold-light);
-}
-
-.pill.is-active {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: #100e0a;
 }
 
 .results-count {
@@ -624,8 +579,8 @@
   }
 
   .hero {
-    height: 42vh;
-    min-height: 280px;
+    height: 68vh;
+    min-height: 420px;
   }
 
   .hero-caption {
@@ -657,16 +612,7 @@
 
 @media (max-width: 420px) {
   .hero {
-    height: 36vh;
-    min-height: 240px;
-  }
-
-  .category-pills {
-    gap: 8px;
-  }
-
-  .pill {
-    padding: 8px 14px;
-    font-size: 0.68rem;
+    height: 60vh;
+    min-height: 380px;
   }
 }

@@ -40,15 +40,19 @@ function App() {
     document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  function handleNavCategory(category) {
+    setSelectedProduct(null)
+    setCategoryFilter(category)
+    // wait for the grid view to (re)render before scrolling to it
+    requestAnimationFrame(scrollToCollection)
+  }
+
   return (
     <div className="app">
       <Navbar
         categories={categories}
         activeCategory={categoryFilter}
-        onSelectCategory={(category) => {
-          setSelectedProduct(null)
-          setCategoryFilter(category)
-        }}
+        onSelectCategory={handleNavCategory}
         onHome={() => setSelectedProduct(null)}
       />
 
@@ -60,9 +64,6 @@ function App() {
           <Filters
             searchTerm={searchTerm}
             onSearchChange={(e) => setSearchTerm(e.target.value)}
-            categories={categories}
-            activeCategory={categoryFilter}
-            onCategoryChange={setCategoryFilter}
             resultCount={filteredProducts.length}
           />
           <ProductGrid products={filteredProducts} onSelect={setSelectedProduct} />
