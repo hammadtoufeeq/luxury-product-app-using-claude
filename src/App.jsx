@@ -7,6 +7,7 @@ import Products from './pages/Products'
 import ProductPage from './pages/ProductPage'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Cart from './pages/Cart'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
 
       <Footer />

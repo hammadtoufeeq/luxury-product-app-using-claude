@@ -12,6 +12,7 @@ function Footer() {
           <Link to="/products">Products</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact Us</Link>
+          <Link to="/cart">Cart</Link>
         </nav>
 
         <p className="footer-copyright">&copy; {new Date().getFullYear()} Maison Lumière. All rights reserved.</p>

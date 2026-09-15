@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom'
+import { useCart } from '../context/useCart'
 
 const navLinkClass = ({ isActive }) => `navbar-link ${isActive ? 'is-active' : ''}`
 
 function Navbar() {
+  const { cartCount } = useCart()
+
   return (
     <header className="navbar">
       <div className="navbar-inner">
@@ -23,6 +26,10 @@ function Navbar() {
           </NavLink>
           <NavLink to="/contact" className={navLinkClass}>
             Contact Us
+          </NavLink>
+          <NavLink to="/cart" className={navLinkClass} aria-label="Cart">
+            Cart
+            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </NavLink>
         </nav>
       </div>
