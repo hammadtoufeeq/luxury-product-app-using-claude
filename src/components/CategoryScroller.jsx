@@ -1,13 +1,6 @@
-import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 function CategoryScroller({ categories }) {
-  const scrollerRef = useRef(null)
-
-  function scrollBy(amount) {
-    scrollerRef.current?.scrollBy({ left: amount, behavior: 'smooth' })
-  }
-
   return (
     <section className="category-scroller-section">
       <div className="section-heading">
@@ -16,16 +9,7 @@ function CategoryScroller({ categories }) {
       </div>
 
       <div className="category-scroller-wrap">
-        <button
-          type="button"
-          className="scroller-arrow scroller-arrow-left"
-          onClick={() => scrollBy(-320)}
-          aria-label="Scroll categories left"
-        >
-          &#8249;
-        </button>
-
-        <div className="category-scroller" ref={scrollerRef}>
+        <div className="category-scroller">
           {categories.map((category) => (
             <Link
               key={category.name}
@@ -39,15 +23,6 @@ function CategoryScroller({ categories }) {
             </Link>
           ))}
         </div>
-
-        <button
-          type="button"
-          className="scroller-arrow scroller-arrow-right"
-          onClick={() => scrollBy(320)}
-          aria-label="Scroll categories right"
-        >
-          &#8250;
-        </button>
       </div>
     </section>
   )

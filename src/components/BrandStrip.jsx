@@ -26,12 +26,14 @@ function BrandStrip() {
         <h2>Our Brands</h2>
       </div>
 
-      <div className="brand-strip">
-        {BRANDS.map((brand) => (
-          <span className="brand-tag" key={brand}>
-            {brand}
-          </span>
-        ))}
+      <div className="brand-marquee">
+        <div className="brand-marquee-track">
+          {[...BRANDS, ...BRANDS].map((brand, index) => (
+            <span className="brand-tag" key={`${brand}-${index}`}>
+              {brand}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   )
