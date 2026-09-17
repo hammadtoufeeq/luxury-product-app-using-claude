@@ -6,20 +6,34 @@ const SLIDES = [
   { src: '/images/hero1.jpg', position: 'center 25%' },
 ]
 
-const SLIDE_DURATION = 10000
+const SLIDE_DURATION = 4000
 const TRACK_SLIDES = [...SLIDES, SLIDES[0]]
 
+// Fixed at module load, so the slide position keeps advancing on this
+// wall-clock timeline even while Hero is unmounted (e.g. on other pages).
+const START_TIME = Date.now()
+
+function currentSlideIndex() {
+  return Math.floor((Date.now() - START_TIME) / SLIDE_DURATION) % SLIDES.length
+}
+
+function msUntilNextSlide() {
+  const elapsed = Date.now() - START_TIME
+  return SLIDE_DURATION - (elapsed % SLIDE_DURATION)
+}
+
 function Hero({ onExplore }) {
-  const [index, setIndex] = useState(0)
-  const [transitionEnabled, setTransitionEnabled] = useState(true)
-  const trackRef = useRef(null)
+  const [index, setIndex] = useState(currentSlideIndex)
+  const [transitionEnabled, setTransitionEnabled] = useState(false)
+  const timeoutRef = useRef(null)
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    function tick() {
       setIndex((current) => current + 1)
-    }, SLIDE_DURATION)
-
-    return () => clearInterval(timer)
+      timeoutRef.current = setTimeout(tick, SLIDE_DURATION)
+    }
+    timeoutRef.current = setTimeout(tick, msUntilNextSlide())
+    return () => clearTimeout(timeoutRef.current)
   }, [])
 
   function handleTransitionEnd() {
@@ -42,7 +56,6 @@ function Hero({ onExplore }) {
   return (
     <section className="hero">
       <div
-        ref={trackRef}
         className="hero-track"
         style={{
           transform: `translateX(-${index * 100}%)`,
