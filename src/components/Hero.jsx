@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 const SLIDES = [
   { src: '/images/hero4.jpg', position: 'center 49%' },
   { src: '/images/hero.jpg', position: 'center' },
-  { src: '/images/hero1.jpg', position: 'center' },
+  { src: '/images/hero1.jpg', position: 'center 25%' },
 ]
 
 const SLIDE_DURATION = 10000
