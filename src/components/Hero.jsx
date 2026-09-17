@@ -7,6 +7,7 @@ const SLIDES = [
 ]
 
 const SLIDE_DURATION = 4000
+const TRANSITION_DURATION = 1050
 const TRACK_SLIDES = [...SLIDES, SLIDES[0]]
 
 // Fixed at module load, so the slide position keeps advancing on this
@@ -25,23 +26,47 @@ function msUntilNextSlide() {
 function Hero({ onExplore }) {
   const [index, setIndex] = useState(currentSlideIndex)
   const [transitionEnabled, setTransitionEnabled] = useState(false)
-  const timeoutRef = useRef(null)
+  const timerRef = useRef(null)
 
   useEffect(() => {
-    function tick() {
-      setIndex((current) => current + 1)
-      timeoutRef.current = setTimeout(tick, SLIDE_DURATION)
-    }
-    timeoutRef.current = setTimeout(tick, msUntilNextSlide())
-    return () => clearTimeout(timeoutRef.current)
-  }, [])
+    let cancelled = false
 
-  function handleTransitionEnd() {
-    if (index === SLIDES.length) {
-      setTransitionEnabled(false)
-      setIndex(0)
+    function scheduleAdvance(delay) {
+      timerRef.current = setTimeout(() => {
+        if (cancelled) return
+        setIndex((current) => {
+          const next = current + 1
+          if (next === SLIDES.length) {
+            scheduleReset()
+          } else {
+            scheduleAdvance(SLIDE_DURATION)
+          }
+          return next
+        })
+      }, delay)
     }
-  }
+
+    function scheduleReset() {
+      timerRef.current = setTimeout(() => {
+        if (cancelled) return
+        setTransitionEnabled(false)
+        setIndex(0)
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!cancelled) setTransitionEnabled(true)
+          })
+        })
+        scheduleAdvance(SLIDE_DURATION)
+      }, TRANSITION_DURATION)
+    }
+
+    scheduleAdvance(msUntilNextSlide())
+
+    return () => {
+      cancelled = true
+      clearTimeout(timerRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     if (transitionEnabled) return
@@ -50,6 +75,10 @@ function Hero({ onExplore }) {
     })
     return () => cancelAnimationFrame(frame)
   }, [transitionEnabled])
+
+  function goToSlide(dotIndex) {
+    setIndex(dotIndex)
+  }
 
   const activeDot = index % SLIDES.length
 
@@ -61,7 +90,6 @@ function Hero({ onExplore }) {
           transform: `translateX(-${index * 100}%)`,
           transition: transitionEnabled ? undefined : 'none',
         }}
-        onTransitionEnd={handleTransitionEnd}
       >
         {TRACK_SLIDES.map((slide, slideIndex) => (
           <div className="hero-slide" key={`${slide.src}-${slideIndex}`}>
@@ -88,7 +116,7 @@ function Hero({ onExplore }) {
           <button
             key={slide.src}
             className={`hero-dot${dotIndex === activeDot ? ' active' : ''}`}
-            onClick={() => setIndex(dotIndex)}
+            onClick={() => goToSlide(dotIndex)}
             aria-label={`Show slide ${dotIndex + 1}`}
           />
         ))}
