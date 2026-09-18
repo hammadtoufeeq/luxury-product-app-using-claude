@@ -4,8 +4,10 @@ import { useAuth } from '../context/useAuth'
 
 function ProductCard({ id, image, name, category, price }) {
   const navigate = useNavigate()
-  const { addToCart } = useCart()
+  const { items, addToCart, updateQuantity } = useCart()
   const { requireLogin } = useAuth()
+
+  const cartItem = items.find((item) => item.id === id)
 
   function goToDetail() {
     navigate(`/product/${id}`)
@@ -24,6 +26,16 @@ function ProductCard({ id, image, name, category, price }) {
     addToCart({ id, image, name, category, price })
   }
 
+  function handleIncrease(e) {
+    e.stopPropagation()
+    updateQuantity(id, cartItem.quantity + 1)
+  }
+
+  function handleDecrease(e) {
+    e.stopPropagation()
+    updateQuantity(id, cartItem.quantity - 1)
+  }
+
   return (
     <article
       className="product-card"
@@ -40,9 +52,21 @@ function ProductCard({ id, image, name, category, price }) {
         <span className="product-category">{category}</span>
         <h3 className="product-name">{name}</h3>
         <p className="product-price">${price.toLocaleString()}</p>
-        <button className="add-to-cart-btn" onClick={handleAddToCart}>
-          Add to Cart
-        </button>
+        {cartItem ? (
+          <div className="quantity-stepper" onClick={(e) => e.stopPropagation()}>
+            <button type="button" aria-label={`Decrease quantity of ${name}`} onClick={handleDecrease}>
+              &minus;
+            </button>
+            <span>{cartItem.quantity}</span>
+            <button type="button" aria-label={`Increase quantity of ${name}`} onClick={handleIncrease}>
+              +
+            </button>
+          </div>
+        ) : (
+          <button className="add-to-cart-btn" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+        )}
       </div>
     </article>
   )

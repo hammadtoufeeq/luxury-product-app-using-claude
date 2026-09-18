@@ -1,18 +1,24 @@
-import { useState } from 'react'
 import InquiryForm from './InquiryForm'
 import { useCart } from '../context/useCart'
 import { useAuth } from '../context/useAuth'
 
 function ProductDetail({ product, onBack }) {
-  const { addToCart } = useCart()
+  const { items, addToCart, updateQuantity } = useCart()
   const { requireLogin } = useAuth()
-  const [added, setAdded] = useState(false)
+
+  const cartItem = items.find((item) => item.id === product.id)
 
   function handleAddToCart() {
     if (!requireLogin()) return
     addToCart(product)
-    setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
+  }
+
+  function handleIncrease() {
+    updateQuantity(product.id, cartItem.quantity + 1)
+  }
+
+  function handleDecrease() {
+    updateQuantity(product.id, cartItem.quantity - 1)
   }
 
   return (
@@ -32,9 +38,29 @@ function ProductDetail({ product, onBack }) {
             <h2>{product.name}</h2>
             <p className="product-detail-price">${product.price.toLocaleString()}</p>
 
-            <button className="add-to-cart-btn add-to-cart-btn-large" onClick={handleAddToCart}>
-              {added ? 'Added to Cart ✓' : 'Add to Cart'}
-            </button>
+            {cartItem ? (
+              <div className="quantity-stepper quantity-stepper-large">
+                <button
+                  type="button"
+                  aria-label={`Decrease quantity of ${product.name}`}
+                  onClick={handleDecrease}
+                >
+                  &minus;
+                </button>
+                <span>{cartItem.quantity}</span>
+                <button
+                  type="button"
+                  aria-label={`Increase quantity of ${product.name}`}
+                  onClick={handleIncrease}
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <button className="add-to-cart-btn add-to-cart-btn-large" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+            )}
 
             <p className="product-detail-note">
               Each piece is inspected and authenticated before it reaches you,

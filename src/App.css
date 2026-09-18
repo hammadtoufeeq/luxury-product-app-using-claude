@@ -1012,6 +1012,50 @@
   letter-spacing: 2px;
 }
 
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 16px;
+  border: 1px solid var(--color-gold-dark);
+  padding: 9px 16px;
+}
+
+.quantity-stepper button {
+  background: none;
+  border: none;
+  color: var(--color-gold-light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.25s ease;
+}
+
+.quantity-stepper button:hover {
+  color: var(--color-gold);
+}
+
+.quantity-stepper span {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: var(--color-text);
+  min-width: 20px;
+  text-align: center;
+}
+
+.quantity-stepper-large {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 13px 20px;
+}
+
+.quantity-stepper-large span {
+  font-size: 1rem;
+}
+
 /* ============ DETAIL VIEW ============ */
 
 .product-detail {
