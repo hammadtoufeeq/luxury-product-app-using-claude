@@ -98,7 +98,9 @@ function Hero({ onExplore }) {
               alt="Luxury Collection"
               className="hero-image"
               style={{ objectPosition: slide.position }}
-              loading={slideIndex === 0 ? 'eager' : 'lazy'}
+              loading="eager"
+              decoding="async"
+              fetchPriority={slideIndex === 0 ? 'high' : 'low'}
             />
           </div>
         ))}
