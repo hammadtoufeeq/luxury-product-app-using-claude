@@ -5,12 +5,13 @@ import { useAuth } from '../context/useAuth'
 const navLinkClass = ({ isActive }) => `navbar-link ${isActive ? 'is-active' : ''}`
 
 function Navbar() {
-  const { cartCount } = useCart()
+  const { cartCount, clearCart } = useCart()
   const { isLoggedIn, logout } = useAuth()
   const navigate = useNavigate()
 
   function handleLogout() {
     logout()
+    clearCart()
     navigate('/')
   }
 
