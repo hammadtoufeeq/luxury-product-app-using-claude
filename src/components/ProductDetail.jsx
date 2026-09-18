@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import InquiryForm from './InquiryForm'
 import { useCart } from '../context/useCart'
+import { useAuth } from '../context/useAuth'
 
 function ProductDetail({ product, onBack }) {
   const { addToCart } = useCart()
+  const { requireLogin } = useAuth()
   const [added, setAdded] = useState(false)
 
   function handleAddToCart() {
+    if (!requireLogin()) return
     addToCart(product)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)

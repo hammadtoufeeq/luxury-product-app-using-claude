@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/useCart'
+import { useAuth } from '../context/useAuth'
 
 function ProductCard({ id, image, name, category, price }) {
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { requireLogin } = useAuth()
 
   function goToDetail() {
     navigate(`/product/${id}`)
@@ -18,6 +20,7 @@ function ProductCard({ id, image, name, category, price }) {
 
   function handleAddToCart(e) {
     e.stopPropagation()
+    if (!requireLogin()) return
     addToCart({ id, image, name, category, price })
   }
 

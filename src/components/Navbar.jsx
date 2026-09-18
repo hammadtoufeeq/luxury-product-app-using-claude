@@ -1,10 +1,18 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/useCart'
+import { useAuth } from '../context/useAuth'
 
 const navLinkClass = ({ isActive }) => `navbar-link ${isActive ? 'is-active' : ''}`
 
 function Navbar() {
   const { cartCount } = useCart()
+  const { isLoggedIn, logout } = useAuth()
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    logout()
+    navigate('/')
+  }
 
   return (
     <header className="navbar">
@@ -31,6 +39,15 @@ function Navbar() {
             Cart
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </NavLink>
+          {isLoggedIn ? (
+            <button className="navbar-link navbar-auth-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <NavLink to="/login" className={navLinkClass}>
+              Login
+            </NavLink>
+          )}
         </nav>
       </div>
     </header>
